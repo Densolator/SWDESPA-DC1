@@ -60,7 +60,7 @@ public class CalendarProgram
     String[] months =  {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     String[] colors = {"Red", "Blue", "Green", "Yellow", "Orange"};
         
-        public void refreshCalendar(int month, int year)
+    public void refreshCalendar(int month, int year)
         {
 		int numOfDays, startOfMonth, i, j;	
 		
