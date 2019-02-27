@@ -18,10 +18,4 @@ public class CalendarProgramController {
 		CPView = view;
 	}
 	
-	public void submitEventForm(String name, String color, int day, int month, int year)
-	{
-		CalendarEvent event = new CalendarEvent(name, color, day, month, year);
-		CPModel.addEvent(event);
-	}
-	
 }

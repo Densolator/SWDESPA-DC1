@@ -23,5 +23,8 @@ public class DesignChallenge1 {
         CPView.setController(CPController);
         CPController.setView(CPView);
         CPController.setModel(CPModel);
+        
+        AddEventController EventController = new AddEventController();
+        CPView.EventView.setController(EventController);
     }
 }

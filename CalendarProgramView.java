@@ -32,6 +32,8 @@ import designchallenge1.CalendarProgram.cmbYear_Action;
 
 public class CalendarProgramView {
 	
+	public AddEventView EventView;
+	
 	//Set Controller
 	public CalendarProgramController CPController;
 	
@@ -51,14 +53,6 @@ public class CalendarProgramView {
    
 	//Add event components
 	
-	public JLabel eventNameLabel, eventDayLabel, eventMonthLabel, eventYearLabel, eventColorLabel;
-	public JButton btnCancel, btnConfirm;
-	public JTextField eventNameField;
-	public JComboBox cmbDaySelection, cmbYearSelection, cmbMonthSelection, cmbColorSelection;
-	public DefaultComboBoxModel model = new DefaultComboBoxModel();
-	public JFrame frmEvent;
-	public JPanel eventPanel;
-	public Container eventPane;
 	
     /**** Calendar Table Components ***/
 	public JTable calendarTable;
@@ -78,16 +72,20 @@ public class CalendarProgramView {
     }
 	catch (Exception e) {}
 	
+	GregorianCalendar cal = new GregorianCalendar();
+	dayBound = cal.get(GregorianCalendar.DAY_OF_MONTH);
+	monthBound = cal.get(GregorianCalendar.MONTH);
+	yearBound = cal.get(GregorianCalendar.YEAR);
+	monthToday = monthBound; 
+	yearToday = yearBound;
+	
+	EventView = new AddEventView(monthBound, yearBound);
 	
 	frmMain = new JFrame ("Calendar Application");
     frmMain.setSize(660, 750);
-    frmEvent = new JFrame("Create a new event");
-    frmEvent.setSize(500, 500);
-    frmEvent.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	pane = frmMain.getContentPane();
 	pane.setLayout(null);
-	eventPane = frmEvent.getContentPane();
-	eventPane.setLayout(null);
+
 	frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	//Calendar window elements
@@ -97,24 +95,7 @@ public class CalendarProgramView {
 	btnPrev = new JButton ("<<");
 	btnNext = new JButton (">>");
 	btnAdd = new JButton("+");
-	
-	//Event window elements
-	eventNameLabel = new JLabel("Name of event:");
-	eventDayLabel = new JLabel("Day:");
-	eventMonthLabel = new JLabel("Month:");
-	eventYearLabel = new JLabel("Year:");
-	eventColorLabel = new JLabel("Color:");
-	eventNameField = new JTextField();
-	btnCancel = new JButton("Cancel");
-	btnConfirm = new JButton("Confirm");
-	cmbDaySelection = new JComboBox(model);
-	cmbMonthSelection = new JComboBox(months);
-	cmbYearSelection = new JComboBox();
-	cmbColorSelection = new JComboBox(colors);
-	
-	
-	
-	
+
 	modelCalendarTable = new DefaultTableModel()
             {
                 public boolean isCellEditable(int rowIndex, int mColIndex)
@@ -144,10 +125,6 @@ public class CalendarProgramView {
 	cmbYear.addActionListener(new cmbYear_Action());
 	btnAdd.addActionListener(new btnAdd_Action());
 	
-	//Event Frame Listeners
-	btnCancel.addActionListener(new btnCancel_Action());
-	btnConfirm.addActionListener(new btnConfirm_Action());
-	
 	pane.add(calendarPanel);
 	calendarPanel.add(monthLabel);
 	calendarPanel.add(yearLabel);
@@ -156,38 +133,7 @@ public class CalendarProgramView {
 	calendarPanel.add(btnNext);
 	calendarPanel.add(btnAdd);
 	calendarPanel.add(scrollCalendarTable);
-	
-	eventPanel = new JPanel(null);
-	eventPane.add(eventPanel);
-	eventPanel.add(btnCancel);
-	eventPanel.add(btnConfirm);
-	eventPanel.add(eventNameLabel);
-	eventPanel.add(eventDayLabel);
-	eventPanel.add(eventMonthLabel);
-	eventPanel.add(eventYearLabel);
-	eventPanel.add(eventColorLabel);
-	eventPanel.add(eventNameField);
-	eventPanel.add(cmbDaySelection);
-	eventPanel.add(cmbMonthSelection);
-	eventPanel.add(cmbYearSelection);
-	eventPanel.add(cmbColorSelection);
-	
-	eventPanel.setBounds(0, 0, 700, 700);
-	btnCancel.setBounds(125, 375, 100, 50);
-	btnConfirm.setBounds(275, 375, 100, 50);
-	eventNameLabel.setBounds(125, 50, 100, 25);
-	eventDayLabel.setBounds(125, 100, 50, 25);
-	eventMonthLabel.setBounds(125, 150, 50, 25);
-	eventYearLabel.setBounds(125, 200, 50, 25);
-	eventColorLabel.setBounds(125, 250, 50, 25);
-	eventNameField.setBounds(225, 55, 150, 25);
-	cmbDaySelection.setBounds(175, 105, 50, 25);
-	cmbMonthSelection.setBounds(175, 155, 150, 25);
-	cmbYearSelection.setBounds(175, 205, 100, 25);
-	cmbColorSelection.setBounds(175, 255, 100, 25);
-	
-	frmEvent.setVisible(false);
-	
+
     calendarPanel.setBounds(0, 0, 640, 670);
     monthLabel.setBounds(320-monthLabel.getPreferredSize().width/2, 50, 200, 50);
 	yearLabel.setBounds(20, 610, 160, 40);
@@ -200,12 +146,7 @@ public class CalendarProgramView {
 	frmMain.setResizable(false);
 	frmMain.setVisible(true);
 	
-	GregorianCalendar cal = new GregorianCalendar();
-	dayBound = cal.get(GregorianCalendar.DAY_OF_MONTH);
-	monthBound = cal.get(GregorianCalendar.MONTH);
-	yearBound = cal.get(GregorianCalendar.YEAR);
-	monthToday = monthBound; 
-	yearToday = yearBound;
+	
 	
 	String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
 	for (int i=0; i<7; i++){
@@ -230,7 +171,7 @@ public class CalendarProgramView {
 	for (int i = yearBound-100; i <= yearBound+100; i++)
     {
 		cmbYear.addItem(String.valueOf(i));
-		cmbYearSelection.addItem(i);
+		EventView.cmbYearSelection.addItem(i);
 	}
 	
 	refreshCalendar(monthBound, yearBound);
@@ -257,9 +198,9 @@ public class CalendarProgramView {
             
 	cmbYear.setSelectedItem(""+year);
 	
-	cmbMonthSelection.setSelectedItem(months[month]);
-	cmbYearSelection.setSelectedItem(year);
-	cmbDaySelection.removeAll();
+	EventView.cmbMonthSelection.setSelectedItem(months[month]);
+	EventView.cmbYearSelection.setSelectedItem(year);
+	EventView.cmbDaySelection.removeAll();
 	
 	for (i = 0; i < 6; i++)
 		for (j = 0; j < 7; j++)
@@ -272,8 +213,8 @@ public class CalendarProgramView {
 	
 	for (i = 1; i <= numOfDays; i++)
     {
-		if(model.getIndexOf(i) == -1)
-			cmbDaySelection.addItem(i);
+		if(EventView.model.getIndexOf(i) == -1)
+			EventView.cmbDaySelection.addItem(i);
 		int row = new Integer((i+startOfMonth-2)/7);
 		int column  =  (i+startOfMonth-2)%7;
 		modelCalendarTable.setValueAt(i, row, column);
@@ -323,7 +264,7 @@ public class CalendarProgramView {
 	{
 		public void actionPerformed (ActionEvent e)
 		{
-			frmEvent.setVisible(true);
+			EventView.showView();
 		}
 	}
 
@@ -339,26 +280,7 @@ public class CalendarProgramView {
 			}
 		}
 	}
-	
-	//Event frame listeners
-	class btnCancel_Action implements ActionListener
-	{
-		public void actionPerformed (ActionEvent e)
-		{
-			frmEvent.setVisible(false);
-		}
-	}
-
-	class btnConfirm_Action implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			frmEvent.setVisible(false);
-//			CPController.submitEventForm(eventNameField.getText(), String.valueOf(cmbColorSelection.getSelectedItem()), (Integer)cmbDaySelection.getSelectedItem(), (Integer)cmbMonthSelection.getSelectedItem(), (Integer)cmbYearSelection.getSelectedItem());
-			System.out.println(cmbYearSelection.getSelectedItem());
-		}
-	}
-	
+		
 	
 }
 

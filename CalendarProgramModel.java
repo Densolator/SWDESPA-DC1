@@ -17,5 +17,7 @@ public class CalendarProgramModel {
 	public void addEvent(CalendarEvent event)
 	{
 		events.add(event);
+		System.out.println(event.getName());
+		System.out.println(event.getDay() + " " +event.getMonth() + " " + event.getYear());
 	}
 }
