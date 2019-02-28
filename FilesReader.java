@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 
 public class FilesReader{
-	public String name, color, line;
-	public int day, month, year;
 	public BufferedReader br; //= new BufferedReader(new FileReader("Philippine Holidays.csv"));
 	public ArrayList<String> characters = new ArrayList<String>();
 	public File file;
@@ -26,35 +24,13 @@ public class FilesReader{
 	{
 		String line;
 	    while ((line = br.readLine()) != null) {
-	        String[] values = line.split(",");
-	        for(String value: values)
-	        	characters.add(value);
+	        characters.add(line);
 	    }
 	}
 	
-	public String getname()
+	public ArrayList<String> getEvent()
 	{
-		return "";
-	}
-	
-	public String getColor()
-	{
-		return "";
-	}
-	
-	public int getDay()
-	{
-		return 0;
-	}
-	
-	public int getMonth()
-	{
-		return 0;
-	}
-	
-	public int getYear()
-	{
-		return 0;
+		return characters;
 	}
 
 }
