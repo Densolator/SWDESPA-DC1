@@ -26,17 +26,19 @@ public class DesignChallenge1 {
     	FilesReader CSVReader = new FilesReader(CSVFile);
     	PSVReader.read();
     	CSVReader.read();
-        CalendarProgramView CPView = new CalendarProgramView();
         CalendarProgramController CPController = new CalendarProgramController();
         CalendarProgramModel CPModel = new CalendarProgramModel();
+        CPController.setModel(CPModel);
+        CPModel.temp();
+        CalendarProgramView CPView = new CalendarProgramView(CPController);
         CPView.setController(CPController);
         CPController.setView(CPView);
-        CPController.setModel(CPModel);
+        
         FileWriter PSVWriter = new FileWriter(PSVReader.getEvent(), " \\| ");
         PSVWriter.writeTo(CPModel.events);
         FileWriter CSVWriter = new FileWriter(CSVReader.getEvent(), ", ");
         CSVWriter.writeTo(CPModel.events);
-        
+        CPModel.printAllEvents();
         AddEventController EventController = new AddEventController();
         CPView.EventView.setController(EventController);
     }

@@ -58,13 +58,14 @@ public class CalendarProgramView {
     
     
     
-	public CalendarProgramView() throws IOException
+	public CalendarProgramView(CalendarProgramController controller) throws IOException
     {
 	try 
 	{
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }
 	catch (Exception e) {}
+	CPController = controller;
 	
 	GregorianCalendar cal = new GregorianCalendar();
 	dayBound = cal.get(GregorianCalendar.DAY_OF_MONTH);
@@ -179,7 +180,6 @@ public class CalendarProgramView {
 	public void refreshCalendar(int month, int year)
     {
 	int numOfDays, startOfMonth, i, j;	
-	
 	btnPrev.setEnabled(true);
 	btnNext.setEnabled(true);
 	if (month == 0 && year <= yearBound-10)
@@ -211,7 +211,11 @@ public class CalendarProgramView {
 			EventView.cmbDaySelection.addItem(i);
 		int row = new Integer((i+startOfMonth-2)/7);
 		int column  =  (i+startOfMonth-2)%7;
-		modelCalendarTable.setValueAt(i, row, column);
+		
+		if(CPController.isThereEvent(i, month, year))
+			modelCalendarTable.setValueAt(i + "*", row, column);
+		else
+			modelCalendarTable.setValueAt(i, row, column);
     }
 
 	calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer());
