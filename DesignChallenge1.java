@@ -35,9 +35,9 @@ public class DesignChallenge1 {
         CPController.setView(CPView);
         
         FileWriter PSVWriter = new FileWriter(PSVReader.getEvent(), " \\| ");
-        PSVWriter.writeTo(CPModel.events);
+        PSVWriter.writeTo(CPModel.events, 0);
         FileWriter CSVWriter = new FileWriter(CSVReader.getEvent(), ", ");
-        CSVWriter.writeTo(CPModel.events);
+        CSVWriter.writeTo(CPModel.events, 1);
         CPModel.printAllEvents();
         AddEventController EventController = new AddEventController();
         CPView.EventView.setController(EventController);

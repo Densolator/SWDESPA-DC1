@@ -1,17 +1,16 @@
 package designchallenge1;
 
 import java.awt.Color;
-import java.lang.reflect.Field;
 
-import javax.swing.table.DefaultTableCellRenderer;
 
 
 public class CalendarEvent {
 	//Attributes
-	private String colorString, name;
+	private String colorString, name, tag;
 	Color color;
 	private int day, month, year;
-	DefaultTableCellRenderer cell = new DefaultTableCellRenderer();
+	
+	String[] tags = {"Event", "Holiday"};
 	
 	//Constructor
 	public CalendarEvent(String name, String color, int day, int month, int year)
@@ -24,6 +23,24 @@ public class CalendarEvent {
 			this.day = day;
 			this.month = month;
 			this.year = year;
+			this.tag = tags[0];
+		}
+		catch(Exception e)
+		{
+		}
+	}
+	
+	public CalendarEvent(String name, String color, int day, int month, int year, int type)
+	{
+		try
+		{
+			this.colorString = color;
+			this.name = name;
+			this.color = (Color)Color.class.getField(color.toLowerCase()).get(null);
+			this.day = day;
+			this.month = month;
+			this.year = year;
+			this.tag = tags[type];
 		}
 		catch(Exception e)
 		{
@@ -87,5 +104,23 @@ public class CalendarEvent {
 			System.out.println("The color " + colorString + " is currently not supported. Please choose a different color");
 			return colorString;
 		}
+	}
+	
+	public void setTag(int type)
+	{
+		try
+		{
+		tag = tags[type];
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			System.out.println("Please enter a number ranging from 0-1 only.");
+			return;
+		}
+	}
+	
+	public String getTag()
+	{
+		return tag;
 	}
 }

@@ -34,4 +34,18 @@ public class CalendarProgramModel {
 			System.out.println(event.getName() + "," + event.getColorString() + ": " + event.getDay() + "," + event.getMonth() + "," + event.getYear());
 		}
 	}
+	
+	public ArrayList<CalendarEvent> getHolidays()
+	{
+		ArrayList<CalendarEvent> holidays = new ArrayList<CalendarEvent>();
+		for(CalendarEvent e: events)
+		{
+			System.out.println(e.getTag() + " " + e.getName() + " " + e.getYear());
+			if(e.getTag().equals("Holiday"))
+			{
+				holidays.add(e);
+			}
+		}
+		return holidays;
+	}
 }

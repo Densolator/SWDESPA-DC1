@@ -1,5 +1,7 @@
 package designchallenge1;
 
+import java.util.ArrayList;
+
 public class CalendarProgramController {
 	
 	//Set View
@@ -35,4 +37,29 @@ public class CalendarProgramController {
 		return false;
 	}
 	
+	public boolean isThereHoliday(int day, int month)
+	{
+		for(CalendarEvent event: CPModel.events)
+		{
+			if((day == event.getDay()) && (month + 1 == event.getMonth()) && event.getTag().equals("Holiday"))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+//	public void setHolidaysYear(int year)
+//	{
+//		ArrayList<CalendarEvent> holidays = CPModel.getHolidays();
+//		for(CalendarEvent e: holidays)
+//		{
+//			CalendarEvent someEvent = new CalendarEvent(e.getName(), e.getColorString(), e.getDay(), e.getMonth(), year, 1);
+//			if(CPModel.events.contains(someEvent))
+//				continue;
+//			else
+//				CPModel.events.add(someEvent);
+//		}
+//	}
+
 }

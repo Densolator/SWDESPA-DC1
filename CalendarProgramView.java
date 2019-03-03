@@ -204,7 +204,6 @@ public class CalendarProgramView {
 	numOfDays = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 	startOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
 	
-	
 	for (i = 1; i <= numOfDays; i++)
     {
 		if(EventView.model.getIndexOf(i) == -1)
@@ -212,11 +211,12 @@ public class CalendarProgramView {
 		int row = new Integer((i+startOfMonth-2)/7);
 		int column  =  (i+startOfMonth-2)%7;
 		
-		if(CPController.isThereEvent(i, month, year))
+		if(CPController.isThereEvent(i, month, year) || CPController.isThereHoliday(i, month))
 			modelCalendarTable.setValueAt(i + "*", row, column);
 		else
 			modelCalendarTable.setValueAt(i, row, column);
     }
+	
 
 	calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer());
 

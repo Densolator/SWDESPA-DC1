@@ -17,7 +17,7 @@ public class FileWriter {
 		this.delimiter = delimiter;
 	}
 	
-	public void writeTo(ArrayList<CalendarEvent> events)
+	public void writeTo(ArrayList<CalendarEvent> events, int tag)
 	{
 		for(String s: lines)
 		{
@@ -48,7 +48,7 @@ public class FileWriter {
 						name = t;
 				}
 			}
-			events.add(new CalendarEvent(name, color, day, month, year));
+			events.add(new CalendarEvent(name, color, day, month, year, tag));
 		}
 	}
 }
